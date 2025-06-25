@@ -36,7 +36,6 @@ const Banner = () => {
             },
           }
         );
-        console.log(request.data);
         setMovie(
           request.data.movies[
             Math.floor(Math.random() * (request.data.movies.length - 1))
@@ -64,7 +63,6 @@ const Banner = () => {
     } else {
       movieTrailer(movie.title || "").then((url) => {
         const urlParams = new URLSearchParams(new URL(url).search);
-        console.log(url, urlParams)
         setTrailerUrl(urlParams.get("v"))
       }).catch((error) => console.log(error));
     }
@@ -99,7 +97,7 @@ const Banner = () => {
               {truncate(movie.overview, 150)}
             </p>
           </div>
-          <div className="fade"></div>
+          {/* <div className="fade"></div> */}
         </div>
       </header>
       {trailerUrl && <YouTube videoId={trailerUrl} opts={opts}/>}

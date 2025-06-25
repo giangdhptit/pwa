@@ -6,7 +6,6 @@ const INITIAL_STATE = {
     user: JSON.parse(localStorage.getItem("user"))
 }
 
-console.log(INITIAL_STATE)
 
 export const AppStateContext = createContext(INITIAL_STATE)
 

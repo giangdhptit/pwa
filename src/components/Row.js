@@ -1,14 +1,27 @@
 import React, { useState } from "react";
 import "../styles/Row.css";
 import movieTrailer from "movie-trailer";
+import { useNavigate } from "react-router-dom";
+import YouTube from "react-youtube";
+
+const opts = {
+  height: "400",
+  width: "100%",
+  playerVars: {
+    autoplay: 1,
+  },
+};
 
 const Row = ({ movies, title, isLarge }) => {
   const [movie, setMovie] = useState({});
   const [trailerUrl, setTrailerUrl] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
 
   // setup page navigation
 
-  const handleMovieClick = (event) => {
+  const handlePlayClick = (event) => {
     event.preventDefault();
 
     // here we should the call seen movies
@@ -19,11 +32,25 @@ const Row = ({ movies, title, isLarge }) => {
       movieTrailer(movie.title || "")
         .then((url) => {
           const urlParams = new URLSearchParams(new URL(url).search);
-          console.log(url, urlParams);
           setTrailerUrl(urlParams.get("v"));
         })
         .catch((error) => console.log(error));
     }
+  };
+
+  const handleViewClick = (event) => {
+    event.preventDefault();
+    navigate(`movie`);
+  };
+
+  const handleMovieClick = (event, movie) => {
+    event.preventDefault();
+    setMovie(movie);
+
+    if (trailerUrl) {
+      setTrailerUrl("");
+    }
+    setShowModal(!showModal)
   };
 
   return (
@@ -44,6 +71,13 @@ const Row = ({ movies, title, isLarge }) => {
           ))
         )}
       </div>
+      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts}/>}
+      {showModal && (
+        <div className="movie_options">
+            <button className="movie_button" onClick={(event) => handlePlayClick(event)}>Play</button>
+            <button className="movie_button" onClick={(event) => handleViewClick(event)}>View</button>
+        </div>
+      )}
     </div>
   );
 };

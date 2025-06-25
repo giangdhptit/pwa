@@ -1,7 +1,6 @@
 const AppStateReducer = (state, action) => {
     switch (action.type) {
         case "Login": {
-            console.log(action.payload)
             localStorage.setItem("user", JSON.stringify({ ...action.payload, isAuthenticated: true }))
 
             return {
