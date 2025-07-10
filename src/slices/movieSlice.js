@@ -25,6 +25,7 @@ export const getMovies = createAsyncThunk("movies/fetchMovies", async () => {
         }`,
       },
     });
+    // throw new Error('test')
     return response.data;
   } catch (error) {
     return error.response.data.error

@@ -40,7 +40,7 @@ const Row = ({ movies, title, isLarge }) => {
 
   const handleViewClick = (event) => {
     event.preventDefault();
-    navigate(`movie`);
+    navigate(`/movie/${movie.movie_id}`, {state: {movie}});
   };
 
   const handleMovieClick = (event, movie) => {

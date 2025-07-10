@@ -14,10 +14,10 @@ const opts = {
   },
 };
 
-const Banner = () => {
+const Banner = ({selectedMovie}) => {
   const { user } = useAppStateContext();
 
-  const [movie, setMovie] = useState({
+  const [movie, setMovie] = useState(selectedMovie ? selectedMovie : {
     title: "",
     release_date: "",
     backdrop_poster: "",
@@ -46,8 +46,10 @@ const Banner = () => {
       }
     };
 
-    fetchData();
-  }, []);
+    if(!selectedMovie){
+      fetchData();
+    }
+  }, [selectedMovie, user?.token]);
 
   const truncate = (str, limit) => {
     return str?.length > limit ? str.substr(0, limit - 1) + "..." : str;
